@@ -4,18 +4,18 @@ import FirstLab.IPos;
 
 import java.util.Objects;
 
-public class Pos implements IPos<Integer> {
+public class Pos implements IPos {
     private int pos;
 
     public Pos(int pos) {
         this.pos = pos;
     }
 
-    @Override public Integer getPos() {
+    public Integer getPos() {
         return pos;
     }
 
-    @Override public void setPos(Integer pos) {
+    public void setPos(Integer pos) {
         this.pos = pos;
     }
 

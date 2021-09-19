@@ -1,5 +1,5 @@
-import FirstLab.ArrayList.List;
-import FirstLab.ArrayList.Node;
+import FirstLab.LinkedList.List;
+import FirstLab.LinkedList.Node;
 
 public class Main {
 	public static void main(String[] args) {

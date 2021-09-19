@@ -4,7 +4,7 @@ import FirstLab.IPos;
 
 import java.util.Objects;
 
-public class Pos implements IPos<Node> {
+public class Pos implements IPos {
 	private Node node;
 	
 	public Pos(Node node) {
@@ -15,7 +15,7 @@ public class Pos implements IPos<Node> {
 		return node;
 	}
 
-	@Override public void setPos(Node pos) {
+	public void setPos(Node pos) {
 		this.node = pos;
 	}
 

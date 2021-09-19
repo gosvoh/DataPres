@@ -15,13 +15,13 @@ public class List implements IList {
         this.tail = new Pos(-1);
     }
 
-    private void checkPos(IPos<Integer> pos) {
+    private void checkPos(Pos pos) {
         if (pos.getPos() < 0 || pos.getPos() >= maxLength)
             throw new NullPosException("It's impossible to get object in empty position!");
     }
 
     @Override public void insert(IPos pos, char[] name, char[] address) {
-        checkPos(pos);
+        checkPos((Pos) pos);
         for (int i = end().getPos(), curP = ((Pos) pos).getPos(); i > curP; i--)
             array[i] = array[i - 1];
         array[((Pos) pos).getPos()] = new Node(name, address);
@@ -48,12 +48,12 @@ public class List implements IList {
     }
 
     @Override public Node retrieve(IPos pos) {
-        checkPos(pos);
+        checkPos((Pos) pos);
         return array[((Pos) pos).getPos()];
     }
 
     @Override public void delete(IPos pos) {
-        checkPos(pos);
+        checkPos((Pos) pos);
         for (int i = ((Pos) pos).getPos(), last = this.tail.getPos(); i < last; i++) {
             array[i].setName(array[i + 1].getName());
             array[i].setAddress(array[i + 1].getAddress());
@@ -62,12 +62,12 @@ public class List implements IList {
     }
 
     @Override public Pos next(IPos pos) {
-        checkPos(pos);
+        checkPos((Pos) pos);
         return new Pos(((Pos) pos).getPos() + 1);
     }
 
     @Override public Pos previous(IPos pos) {
-        checkPos(pos);
+        checkPos((Pos) pos);
         return new Pos(((Pos) pos).getPos() - 1);
     }
 
