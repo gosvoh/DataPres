@@ -1,8 +1,10 @@
-package LinkedList;
+package FirstLab.LinkedList;
+
+import FirstLab.IPos;
 
 import java.util.Objects;
 
-public class Pos {
+public class Pos implements IPos<Node> {
 	private Node node;
 	
 	public Pos(Node node) {
@@ -12,9 +14,13 @@ public class Pos {
 	public Node getPos() {
 		return node;
 	}
-	
-	public void setPos(Node node) {
-		this.node = node;
+
+	@Override public void setPos(Node pos) {
+		this.node = pos;
+	}
+
+	@Override public String toString() {
+		return node.toString();
 	}
 
 	@Override public boolean equals(Object o) {
