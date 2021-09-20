@@ -1,12 +1,10 @@
-package FirstLab.LinkedList;
-
-import FirstLab.INode;
+package FirstLab;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Node implements INode {
+public class Node {
     private final char[] name    = new char[20];
     private final char[] address = new char[50];
     private       Node   next;
@@ -21,23 +19,23 @@ public class Node implements INode {
         return next;
     }
 
-    public void setNext(INode node) {
-        next = (Node) node;
+    public void setNext(Node node) {
+        next = node;
     }
 
-    @Override public char[] getName() {
+    public char[] getName() {
         return name;
     }
 
-    @Override public void setName(char[] name) {
+    public void setName(char[] name) {
         System.arraycopy(name, 0, this.name, 0, name.length);
     }
 
-    @Override public char[] getAddress() {
+    public char[] getAddress() {
         return address;
     }
 
-    @Override public void setAddress(char[] address) {
+    public void setAddress(char[] address) {
         System.arraycopy(address, 0, this.address, 0, address.length);
     }
 
@@ -66,8 +64,7 @@ public class Node implements INode {
         if (this == o) return true;
         if (!(o instanceof Node)) return false;
         Node node = (Node) o;
-        return Arrays.equals(name, node.name) && Arrays.equals(address, node.address) &&
-               Objects.equals(next, node.next);
+        return Arrays.equals(name, node.name) && Arrays.equals(address, node.address);
     }
 
     @Override public int hashCode() {

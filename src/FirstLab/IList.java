@@ -7,9 +7,9 @@ public interface IList {
 
     IPos end();
 
-    IPos locate(INode node);
+    IPos locate(Node node);
 
-    INode retrieve(IPos pos);
+    Node retrieve(IPos pos);
 
     void delete(IPos pos);
 

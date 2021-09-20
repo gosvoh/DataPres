@@ -1,6 +1,7 @@
 package FirstLab.LinkedList;
 
 import FirstLab.IPos;
+import FirstLab.Node;
 
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class Pos implements IPos {
 	@Override public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Pos)) return false;
-		return node.equals(((Pos) o).getPos());
+		return node == ((Pos) o).getPos();
 	}
 
 	@Override public int hashCode() {

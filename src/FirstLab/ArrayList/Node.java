@@ -1,3 +1,4 @@
+/*
 package FirstLab.ArrayList;
 
 import FirstLab.INode;
@@ -60,3 +61,4 @@ public class Node implements INode {
         return result;
     }
 }
+*/
