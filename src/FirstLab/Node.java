@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 public class Node {
     private final char[] name    = new char[20];
     private final char[] address = new char[50];
+    /** Позиция следующего элемента (только для связного списка) */
     private       Node   next;
+    /** Позиция предыдущего элемента (только для двусвязного списка) */
+    private       Node   prev;
 
     public Node(char[] name, char[] address) {
         System.arraycopy(name, 0, this.name, 0, name.length);
@@ -21,6 +24,14 @@ public class Node {
 
     public void setNext(Node node) {
         next = node;
+    }
+
+    public Node getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Node prev) {
+        this.prev = prev;
     }
 
     public char[] getName() {
@@ -42,6 +53,8 @@ public class Node {
     public boolean hasNext() {
         return next != null;
     }
+
+    public boolean hasPrev() { return prev != null; }
 
     private String getStrFromChar(char[] chars) {
         StringBuilder sb = new StringBuilder();
