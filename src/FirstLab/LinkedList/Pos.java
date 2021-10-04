@@ -21,7 +21,8 @@ public class Pos implements IPos {
 	}
 
 	@Override public String toString() {
-		return node.toString();
+		if (node == null) return "Empty element!";
+		else return node.toString();
 	}
 
 	@Override public boolean equals(Object o) {
