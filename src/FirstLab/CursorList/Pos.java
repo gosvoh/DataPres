@@ -1,55 +1,47 @@
 package FirstLab.CursorList;
 
 import FirstLab.IPos;
-import FirstLab.Node;
+import FirstLab.ListData;
 
-public class Pos implements IPos {
-    private Node element;
-    private int  pos;
-    private Pos  next;
+import java.util.Objects;
+
+class Pos implements IPos {
+    private ListData listData;
+    private int      next;
 
     public Pos() {
-        element = null;
-        pos = -1;
-        next = null;
+        this.listData = null;
+        this.next = -1;
     }
 
-    public Pos(Node element) {
-        this.element = element;
-        pos = 0;
+    public ListData getListObj() {
+        return listData;
     }
 
-    public Pos(int pos) {
-        this.pos = pos;
-        element = null;
+    public void setListObj(ListData listData) {
+        this.listData = listData;
     }
 
-    public Node getElement() {
-        return element;
-    }
-
-    public void setElement(Node element) {
-        this.element = element;
-    }
-
-    public int getPos() {
-        return pos;
-    }
-
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
-
-    public Pos getNext() {
+    public int getNext() {
         return next;
     }
 
-    public void setNext(Pos next) {
+    public void setNext(int next) {
         this.next = next;
     }
 
     @Override public String toString() {
-        return "Pos{" + "element=" + element + ", pos=" + pos + ", next=" + next + '}';
+        if (listData == null) return "Empty element!";
+        else return listData.toString();
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pos)) return false;
+        return next == ((Pos) o).getNext();
+    }
+
+    @Override public int hashCode() {
+        return Objects.hash(listData);
     }
 }
-
