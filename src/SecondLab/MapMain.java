@@ -1,12 +1,17 @@
 package SecondLab;
 
+import SecondLab.Array.Map;
+
 import java.util.Random;
 
 public class MapMain {
     public static void main(String[] args) {
-        Map map = new Map();
+        runCode(new Map());
+    }
+
+    private static void runCode(AMap map) {
         char a = Map.RangeType.FIRST, z = Map.RangeType.LAST;
-        Map.RangeType r = new Map.RangeType(Map.RangeType.NODEF);
+        Map.RangeType r = new AMap.RangeType(AMap.RangeType.NODEF);
         Random random = new Random();
         int i, size = z - a + 1;
         while (a <= z) {

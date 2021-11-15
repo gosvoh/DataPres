@@ -1,13 +1,14 @@
 package FirstLab;
 
-import FirstLab.CursorList.List;
-import FirstLab.IList;
-import FirstLab.IPos;
-import FirstLab.ListData;
-
 public class Main {
 	public static void main(String[] args) {
-		List list = new List();
+		runCode(new FirstLab.ArrayList.List());
+		runCode(new FirstLab.LinkedList.List());
+		runCode(new FirstLab.CursorList.List());
+		runCode(new FirstLab.DoublyLinkedList.List());
+	}
+
+	private static void runCode(IList list) {
 		ListData node1 = new ListData("gosvoh".toCharArray(), "gosvoh@gosvoh.ga".toCharArray());
 		ListData node2 = new ListData("Alex".toCharArray(), "vohmina2011@yandex.ru".toCharArray());
 		list.insert(list.end(), node1);
@@ -27,6 +28,7 @@ public class Main {
 		list.printList();
 		list.makeNull();
 		list.printList();
+		System.out.println("----------------------------------------------");
 	}
 
 	private static void deleteDupes(IList list) {
