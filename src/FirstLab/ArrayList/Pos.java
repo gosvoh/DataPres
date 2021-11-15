@@ -4,7 +4,7 @@ import FirstLab.IPos;
 
 import java.util.Objects;
 
-public class Pos implements IPos {
+class Pos implements IPos {
     private int pos;
 
     public Pos(int pos) {

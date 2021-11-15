@@ -1,9 +1,6 @@
 package FirstLab.ArrayList;
 
-import FirstLab.IList;
-import FirstLab.IPos;
-import FirstLab.Node;
-import FirstLab.NullPosException;
+import FirstLab.*;
 
 public class List implements IList {
     private static final int    MAX_LENGTH = 10;
@@ -18,11 +15,13 @@ public class List implements IList {
         this.tail = new Pos(-1);
     }
 
-    @Override public void insert(IPos pos, char[] name, char[] address) {
-        if (((Pos) pos).getPos() < 0 || ((Pos) pos).getPos() >= MAX_LENGTH) return;
-        for (int i = tail.getPos(), curP = ((Pos) pos).getPos(); i > curP; i--)
-            array[i + 1] = array[i];
-        array[((Pos) pos).getPos()] = new Node(name, address);
+    @Override public void insert(IPos pos, ListData listData) {
+        int p = ((Pos) pos).getPos();
+        if (p < 0 || p >= MAX_LENGTH) return;
+        if (tail.getPos() - p >= 0)
+            for (int i = tail.getPos(); i > p; i--) array[i + 1] = array[i];
+
+        array[p] = new Node(listData);
         this.tail.setPos(this.tail.getPos() + 1);
     }
 
@@ -37,23 +36,25 @@ public class List implements IList {
         return new Pos(this.tail.getPos() + 1);
     }
 
-    @Override public Pos locate(Node node) {
-        if (tail.getPos() == -1 || node == null) throw new NullPosException("List is empty or wrong element!");
+    @Override public Pos locate(ListData node) {
         for (int i = 0, last = this.tail.getPos(); i < last; i++)
-            if (node.equals(array[i])) return new Pos(i);
+            if (node.equals(array[i].getListObj())) return new Pos(i);
 
         return new Pos(this.tail.getPos() + 1);
     }
 
-    @Override public Node retrieve(IPos pos) {
+    @Override public ListData retrieve(IPos pos) {
         if (tail.getPos() == -1 || ((Pos) pos).getPos() < 0 || ((Pos) pos).getPos() > tail.getPos())
             throw new NullPosException("List is empty or wrong position!");
-        return array[((Pos) pos).getPos()];
+        return array[((Pos) pos).getPos()].getListObj();
     }
 
     @Override public void delete(IPos pos) {
         if (tail.getPos() == -1 || ((Pos) pos).getPos() < 0 || ((Pos) pos).getPos() > tail.getPos()) return;
-        for (int i = ((Pos) pos).getPos(), last = this.tail.getPos(); i < last; i++) array[i] = array[i + 1];
+
+        for (int i = ((Pos) pos).getPos(), last = this.tail.getPos(); i < last; i++)
+            array[i] = array[i + 1];
+
         array[this.tail.getPos()] = null;
         this.tail.setPos(this.tail.getPos() - 1);
     }
@@ -83,7 +84,7 @@ public class List implements IList {
         sb.append(this.getClass().getName()).append(":").append(System.lineSeparator());
         if (this.tail.getPos() == -1) sb.append("List is empty!");
         for (int i = 0, last = end().getPos(); i < last; i++)
-            if (array[i].getName()[0] != 0 && array[i].getName()[0] != 0) {
+            if (array[i].getListObj().getName()[0] != 0 && array[i].getListObj().getName()[0] != 0) {
                 sb.append(array[i]);
                 if (i + 1 != last) sb.append(",").append(System.lineSeparator());
             }

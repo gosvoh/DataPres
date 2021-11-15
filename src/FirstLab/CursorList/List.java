@@ -9,60 +9,48 @@ public class List implements IList {
     private static final int          MAX_SIZE = 10;
     private static final MemoryCell[] objects  = new MemoryCell[MAX_SIZE];
     private static       int          SPACE    = 0;
-    private              int          head;
 
     static {
-        for (int i = 1; i < objects.length; i++) {
+        for (int i = 0; i < objects.length; i++) {
             objects[i] = new MemoryCell();
             objects[i].next = i + 1;
         }
         objects[MAX_SIZE - 1].next = -1;
     }
 
+    private              int          head;
+
     public List() {
         head = -1;
     }
 
-    @Override public void insert(IPos pos, ListData li) {
-        ListData listData = li.copy();
-        /*if (head == -1) {
-            int tmp = allocate();
-            head = tmp;
-            objects[head].setListObj(listObj);
-            objects[head].setNext(-1);
-        } else if (((Pos) pos).getNext() == -1) {
-            Pos last = getLast();
-            int tmp = allocate();
-            last.setNext(SPACE);
-            Pos newObj = objects[SPACE];
-            SPACE = objects[SPACE].getNext();
-            newObj.setListObj(listObj);
-            newObj.setNext(-1);
+    @Override public void insert(IPos pos, ListData ld) {
+        int pointer = allocate();
+        if (pointer == -1) return;
+        ListData listData = ld.copy();
+        MemoryCell prev = head == -1 ? null : getPrev(((Pos) pos).cell);
+
+        MemoryCell pMem = ((Pos) pos).cell;
+        MemoryCell next = objects[pointer];
+        next.listData = listData;
+        if (head == -1 || pMem == objects[head]) {
+            next.next = head;
+            head = pointer;
         } else {
-            Pos prev = getPrev((Pos) pos);
-            Pos next = objects[prev.getNext()];
-            prev.setNext(SPACE);
-            SPACE = objects[SPACE].getNext();
-            prev.setListObj(listObj);
-            objects[prev.getNext()].setNext(next.getNext());
-        }*/
-        /*int p = allocate();
-        Pos prev = getPrev((Pos) pos);
-        Pos next;
-        if (head == -1) {
-
-        } else if (pos == objects[head]) {
-            next = objects[head];
-        } else if (((Pos) pos).getNext() == -1) {
-
-        }*/
+            next.next = prev.next;
+            prev.next = pointer;
+        }
     }
 
+    /**
+     *
+     * @return
+     */
     private int allocate() {
-        int p = SPACE;
-        if (p == -1) throw new NullPosException("Out of memory");
+        int pointer = SPACE;
+        if (pointer == -1) return -1;
         SPACE = objects[SPACE].next;
-        return p;
+        return pointer;
     }
 
     private void swapMem(int pointer1, Pos pos1, int pointer2, Pos pos2) {
@@ -89,24 +77,26 @@ public class List implements IList {
          */
     }
 
-    private MemoryCell getPrev(MemoryCell ld) {
-        MemoryCell cur = objects[head];
-        MemoryCell prev = null;
-        while (cur.next != -1) {
-            if (ld == cur) return prev;
-            prev = cur;
-            cur = objects[cur.next];
+    private MemoryCell getPrev(MemoryCell mc) {
+        MemoryCell curr = objects[head];
+        MemoryCell prev = new MemoryCell();
+        int h = head;
+        while (h != -1) {
+            if (curr.listData == mc.listData) return prev;
+            h = curr.next;
+            prev = curr;
+            if (mc.listData == null && h == -1) return prev;
+            curr = objects[h];
         }
-        return prev;
+        return new MemoryCell();
     }
 
     private MemoryCell getLast() {
-        MemoryCell mc = objects[head];
-        if (mc.next == -1) return mc;
-        MemoryCell prev = null;
-        while (mc.next != -1) {
-            mc = objects[mc.next];
-            prev = mc;
+        MemoryCell curr = objects[head];
+        MemoryCell prev = curr;
+        while (curr.next != -1) {
+            curr = objects[curr.next];
+            prev = curr;
         }
         return prev;
     }
@@ -117,7 +107,7 @@ public class List implements IList {
 
     /** @return позиция после последнего элемента */
     @Override public Pos end() {
-        return new Pos(new MemoryCell(-1));
+        return new Pos(new MemoryCell());
     }
 
     @Override public Pos locate(ListData data) {
@@ -125,19 +115,17 @@ public class List implements IList {
         int h = head;
         while (h != -1) {
             if (data.equals(objects[h].listData)) return new Pos(objects[h]);
-            else h = objects[h].next;
+            h = objects[h].next;
         }
-        return null;
+        return new Pos(new MemoryCell());
     }
 
     @Override public ListData retrieve(IPos pos) {
-        if (head == -1 || ((Pos) pos).cell == null) throw new NullPosException("List is empty or wrong position!");
-        int h = head;
-        while (h != -1) {
-            if (objects[h] == ((Pos) pos).cell) return objects[h].listData;
-            h = objects[h].next;
-        }
-        throw new NullPosException("No such element!");
+        if (head == -1 || ((Pos) pos).cell == null)
+            throw new NullPosException("List is empty or wrong position!");
+        int h = ((Pos) pos).cell == objects[head] ? head : getPrev(((Pos) pos).cell).next;
+        if (h == -1) throw new NullPosException("No such element!");
+        return objects[h].listData;
     }
 
     private void free(int pos) {
@@ -149,16 +137,16 @@ public class List implements IList {
     @Override public void delete(IPos pos) {
         if (head == -1 || ((Pos) pos).cell == null) return;
         MemoryCell prev = getPrev(((Pos) pos).cell);
-        int p;
-        if (prev == null && ((Pos) pos).cell == objects[head]) {
-            p = head;
-            head = objects[p].next;
+        int pointer;
+        if (prev.listData == null && ((Pos) pos).cell == objects[head]) {
+            pointer = head;
+            head = objects[pointer].next;
         } else {
-            if (prev == null) throw new NullPosException("Empty previous");
-            p = prev.next;
-            prev.next = objects[p].next;
+            if (prev.listData == null) throw new NullPosException("Empty previous");
+            pointer = prev.next;
+            prev.next = objects[pointer].next;
         }
-        free(p);
+        free(pointer);
     }
 
     @Override public Pos next(IPos pos) {

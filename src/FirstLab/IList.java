@@ -1,15 +1,15 @@
 package FirstLab;
 
 public interface IList {
-    void insert(IPos pos, char[] name, char[] address);
+    void insert(IPos pos, ListData listData);
 
     IPos first();
 
     IPos end();
 
-    IPos locate(Node node);
+    IPos locate(ListData node);
 
-    Node retrieve(IPos pos);
+    ListData retrieve(IPos pos);
 
     void delete(IPos pos);
 

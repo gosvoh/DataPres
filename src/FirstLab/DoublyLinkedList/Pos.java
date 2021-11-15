@@ -5,7 +5,7 @@ import FirstLab.Node;
 
 import java.util.Objects;
 
-public class Pos implements IPos {
+class Pos implements IPos {
     private Node node;
 
     public Pos(Node node) {
@@ -21,13 +21,14 @@ public class Pos implements IPos {
     }
 
     @Override public String toString() {
-        return node.toString();
+        if (node == null) return "Empty element!";
+        else return node.toString();
     }
 
     @Override public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FirstLab.LinkedList.Pos)) return false;
-        return node == ((FirstLab.LinkedList.Pos) o).getPos();
+        if (!(o instanceof Pos)) return false;
+        return node == ((Pos) o).getPos();
     }
 
     @Override public int hashCode() {

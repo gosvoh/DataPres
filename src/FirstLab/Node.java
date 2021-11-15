@@ -1,21 +1,30 @@
 package FirstLab;
 
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Node {
-    private final char[] name    = new char[20];
-    private final char[] address = new char[50];
+    private ListData listData;
     /** Позиция следующего элемента (только для связного списка) */
-    private       Node   next;
+    private Node     next;
     /** Позиция предыдущего элемента (только для двусвязного списка) */
     private       Node   prev;
 
-    public Node(char[] name, char[] address) {
-        System.arraycopy(name, 0, this.name, 0, name.length);
-        System.arraycopy(address, 0, this.address, 0, address.length);
+    public Node(ListData listData) {
+        this.listData = new ListData(listData);
         next = null;
+        prev = null;
+    }
+
+    /*public Node(Node node) {
+        if (node == null) throw new NullPosException("Empty object!");
+        listData = new ListData(node.listData);
+        next = null;
+    }*/
+
+    public Node(ListData data, Node next) {
+        this.listData = data;
+        this.next = next;
+        this.prev = null;
     }
 
     public Node getNext() {
@@ -34,20 +43,12 @@ public class Node {
         this.prev = prev;
     }
 
-    public char[] getName() {
-        return name;
+    public ListData getListObj() {
+        return listData;
     }
 
-    public void setName(char[] name) {
-        System.arraycopy(name, 0, this.name, 0, name.length);
-    }
-
-    public char[] getAddress() {
-        return address;
-    }
-
-    public void setAddress(char[] address) {
-        System.arraycopy(address, 0, this.address, 0, address.length);
+    public void setListObj(ListData listData) {
+        this.listData = listData;
     }
 
     public boolean hasNext() {
@@ -56,34 +57,18 @@ public class Node {
 
     public boolean hasPrev() { return prev != null; }
 
-    private String getStrFromChar(char[] chars) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : chars) if (c != 0) sb.append(c);
-        return sb.toString();
-    }
-
-    private String getClearStr(String str) {
-        return str.chars().filter(c -> c != 0).mapToObj(c -> {
-            char ch = (char) c;
-            return String.valueOf(ch);
-        }).collect(Collectors.joining());
-    }
-
     @Override public String toString() {
-        return "Name: " + getStrFromChar(name) + ", address: " + getStrFromChar(address);
+        return listData.toString();
     }
 
     @Override public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Node)) return false;
         Node node = (Node) o;
-        return Arrays.equals(name, node.name) && Arrays.equals(address, node.address);
+        return this.listData.equals(node.listData);
     }
 
     @Override public int hashCode() {
-        int result = Objects.hash(next);
-        result = 31 * result + Arrays.hashCode(name);
-        result = 31 * result + Arrays.hashCode(address);
-        return result;
+        return Objects.hash(listData, next, prev);
     }
 }
