@@ -12,17 +12,17 @@ public class Map extends AMap {
             array[i - RangeType.FIRST] = new RangeType(RangeType.NODEF);
     }
 
-    public void makeNull() {
+    @Override public void makeNull() {
         for (int i = RangeType.FIRST; i <= RangeType.LAST; i++) array[i - RangeType.FIRST].setC(RangeType.NODEF);
     }
 
-    public void assign(int d, char r) {
-        array[d].setC(r);
+    @Override public void assign(int key, char value) {
+        array[key].setC(value);
     }
 
-    public boolean compute(int d, RangeType r) {
-        if (array[d].getC() == RangeType.NODEF) return false;
-        r.setC(array[d].getC());
+    @Override public boolean compute(int key, RangeType r) {
+        if (array[key].getC() == RangeType.NODEF) return false;
+        r.setC(array[key].getC());
         return true;
     }
 

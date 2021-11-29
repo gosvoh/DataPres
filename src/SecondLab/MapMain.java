@@ -1,17 +1,17 @@
 package SecondLab;
 
-import SecondLab.Array.Map;
-
 import java.util.Random;
 
 public class MapMain {
     public static void main(String[] args) {
-        runCode(new Map());
+//        runCode(new SecondLab.Array.Map());
+//        runCode(new SecondLab.ATDList.Map());
+        runCode(new SecondLab.LinkedList.Map());
     }
 
     private static void runCode(AMap map) {
-        char a = Map.RangeType.FIRST, z = Map.RangeType.LAST;
-        Map.RangeType r = new AMap.RangeType(AMap.RangeType.NODEF);
+        char a = AMap.RangeType.FIRST, z = AMap.RangeType.LAST;
+        AMap.RangeType r = new AMap.RangeType(AMap.RangeType.NODEF);
         Random random = new Random();
         int i, size = z - a + 1;
         while (a <= z) {
@@ -21,12 +21,13 @@ public class MapMain {
         System.out.println(map);
         System.out.println();
 
-        a = Map.RangeType.FIRST;
+        a = AMap.RangeType.FIRST;
         for (i = 0; i < size; i++) map.assign(i, a++);
         System.out.println(map);
         System.out.println();
 
         map.makeNull();
         System.out.println(map);
+        System.out.println();
     }
 }

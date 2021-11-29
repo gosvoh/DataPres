@@ -15,8 +15,8 @@ public class List implements IList {
      * Если голова списка пустая и позиция тоже, то вставляем элемент в голову<br>
      * Иначе возвращаем управление
      *
-     * @param pos
-     * @param listData
+     * @param pos позиция для вставки
+     * @param listData информация для вставки
      */
     @Override public void insert(IPos pos, ListData listData) {
         if (head == null) {
@@ -26,7 +26,8 @@ public class List implements IList {
         if (((Pos) pos).getPos() == null) getLast().setNext(new Node(listData));
         else {
             Node prev = getPrev(((Pos) pos).getPos());
-            if (prev == null) return;
+            if (((Pos) pos).getPos() == head) prev = head;
+            else if (prev == null) return;
             Node next = prev.getNext();
             Node node = new Node(listData);
             prev.setNext(node);
