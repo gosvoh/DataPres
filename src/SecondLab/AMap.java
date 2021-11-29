@@ -4,9 +4,9 @@ public abstract class AMap {
 
     public abstract void makeNull();
 
-    public abstract void assign(int d, char r);
+    public abstract void assign(int key, char value);
 
-    public abstract boolean compute(int d, RangeType r);
+    public abstract boolean compute(int key, RangeType r);
 
     protected static class RangeType {
         public final static char NODEF = '?';
