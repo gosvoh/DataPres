@@ -12,7 +12,7 @@ public class Map extends AMap {
     public Map() {
         list = new List();
         for (int i = RangeType.FIRST; i <= RangeType.LAST; i++)
-            list.insert(list.end(), new ListData(new char[]{RangeType.NODEF}, new char[0]));
+            list.insert(list.end(), new ListData(String.valueOf(i - RangeType.FIRST).toCharArray(), new char[]{RangeType.NODEF}));
     }
 
     @Override public void makeNull() {

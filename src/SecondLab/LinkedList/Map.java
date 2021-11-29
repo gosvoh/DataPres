@@ -1,7 +1,5 @@
 package SecondLab.LinkedList;
 
-import FirstLab.LinkedList.Pos;
-import FirstLab.ListData;
 import SecondLab.AMap;
 
 public class Map extends AMap {
