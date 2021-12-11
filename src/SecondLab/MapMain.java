@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class MapMain {
     public static void main(String[] args) {
-        runCode(new SecondLab.Array.Map());
+//        runCode(new SecondLab.Array.Map());
         runCode(new SecondLab.ATDList.Map());
-        runCode(new SecondLab.LinkedList.Map());
+//        runCode(new SecondLab.LinkedList.Map());
     }
 
     private static void runCode(AMap map) {

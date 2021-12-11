@@ -130,7 +130,7 @@ public class List implements IList {
         if (((Pos) pos).getPos() == head) node = head;
         else node = contains(((Pos) pos).getPos());
         if (node == null) throw new NullPosException("");
-        else return node.getNext() == null ? end : new Pos(node.getNext());
+        else return new Pos(node.getNext());
     }
 
     @Override public void makeNull() {

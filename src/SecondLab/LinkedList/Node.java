@@ -2,6 +2,7 @@ package SecondLab.LinkedList;
 
 public class Node {
     Node next;
+    int key;
     char data;
 
     Node() {
@@ -16,8 +17,18 @@ public class Node {
         this(null, data);
     }
 
+    Node(int key, char data) {
+        this(null, key, data);
+    }
+
     Node(Node next, char data) {
         this.next = next;
+        this.data = data;
+    }
+
+    Node(Node next, int key, char data) {
+        this.next = next;
+        this.key = key;
         this.data = data;
     }
 }

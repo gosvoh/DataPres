@@ -1,7 +1,7 @@
 package SecondLab.ATDList;
 
 import FirstLab.LinkedList.List;
-import FirstLab.LinkedList.Pos;
+import FirstLab.IPos;
 import FirstLab.ListData;
 import SecondLab.AMap;
 
@@ -12,38 +12,51 @@ public class Map extends AMap {
     public Map() {
         list = new List();
         for (int i = RangeType.FIRST; i <= RangeType.LAST; i++)
-            list.insert(list.end(), new ListData(String.valueOf(i - RangeType.FIRST).toCharArray(), new char[]{RangeType.NODEF}));
+            list.insert(list.end(),
+                    new ListData(new char[]{(char) (i - RangeType.FIRST)}, new char[]{RangeType.NODEF}));
+    }
+
+    private char[] getData(int key) {
+        IPos pos = list.first();
+        while (!pos.equals(list.end())) {
+            ListData ld = list.retrieve(pos);
+            if (ld.getName()[0] == key) return ld.getAddress();
+            pos = list.next(pos);
+        }
+        return null;
     }
 
     @Override public void makeNull() {
-        list.makeNull();
-        for (int i = RangeType.FIRST; i <= RangeType.LAST; i++)
-            list.insert(list.end(), new ListData(new char[]{RangeType.NODEF}, new char[0]));
+        IPos pos = list.first();
+        while (!pos.equals(list.end())) {
+            list.retrieve(pos).getAddress()[0] = RangeType.NODEF;
+            pos = list.next(pos);
+        }
     }
 
     @Override public void assign(int key, char value) {
-        Pos pos = list.first();
-        for (int i = 0; i < key; i++) pos = list.next(pos);
-        list.insert(pos, new ListData(new char[]{value}, new char[0]));
-        list.delete(pos);
+        char[] data = getData(key);
+        if (data != null) data[0] = value;
     }
 
     @Override public boolean compute(int key, RangeType r) {
-        Pos pos = list.first();
-        for (int i = 0; i < key; i++) pos = list.next(pos);
-        if (list.retrieve(pos).getName()[0] == RangeType.NODEF) return false;
-        r.setC(list.retrieve(pos).getName()[0]);
+        char[] data = getData(key);
+        if (data == null || data[0] == RangeType.NODEF) return false;
+        r.setC(data[0]);
         return true;
     }
 
     @Override public String toString() {
         StringBuilder sb = new StringBuilder();
-        int size = RangeType.LAST - RangeType.FIRST + 1;
-        for (int i = 0; i < size; i++) sb.append(String.format("%3d", i));
+        IPos pos = list.first();
+        while (!pos.equals(list.end())) {
+            sb.append(String.format("%3d", (int) list.retrieve(pos).getName()[0]));
+            pos = list.next(pos);
+        }
         sb.append("\n");
-        Pos pos = list.first();
-        while (pos != list.end() && pos != null) {
-            sb.append(String.format("%3c", list.retrieve(pos).getName()[0]));
+        pos = list.first();
+        while (!pos.equals(list.end())) {
+            sb.append(String.format("%3c", list.retrieve(pos).getAddress()[0]));
             pos = list.next(pos);
         }
         return sb.toString();
