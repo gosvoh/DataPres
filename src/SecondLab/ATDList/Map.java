@@ -31,7 +31,7 @@ public class Map extends AMap {
     @Override public boolean compute(int key, RangeType r) {
         Pos pos = list.first();
         for (int i = 0; i < key; i++) pos = list.next(pos);
-        if (list.retrieve(pos).getName()[0] == RangeType.NODEF) return false;
+        if (list.retrieve(pos).getAddress()[0] == RangeType.NODEF) return false;
         r.setC(list.retrieve(pos).getName()[0]);
         return true;
     }

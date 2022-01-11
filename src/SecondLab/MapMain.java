@@ -28,6 +28,6 @@ public class MapMain {
 
         map.makeNull();
         System.out.println(map);
-        System.out.println();
+        System.out.println("--------------------------------------------------------------");
     }
 }
