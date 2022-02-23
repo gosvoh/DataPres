@@ -22,7 +22,9 @@ public class Tree {
         Tree tree1 = new Tree().create('A').create('C', new Tree().create('B'));
         Tree tree2 = new Tree().create('D').create('F', new Tree().create('E'));
         tree1.create('G', tree2);
+//        Tree tree3 = new Tree().create('1').create('2').create('3');
         System.out.println(tree1);
+        tree2.makeNull();
 //        int parent = tree1.parent(6);
 //        System.out.println(parent);
 //        tree1.makeNull();
@@ -68,9 +70,9 @@ public class Tree {
         return array[parent].next.next.name;
     }
 
-    public int label(int node) {
+    public char label(int node) {
         checkRoot();
-        if (node == root) return root;
+        if (node == root) return array[root].label;
         int parent = getParent(node, root);
         if (parent == -1) throw new NullPointerException();
         return array[node].label;
@@ -128,7 +130,7 @@ public class Tree {
             sb.append("[").append(i).append("] ").append(array[i].label);
             Node node = array[i].next;
             while (node != null) {
-                sb.append(" -> ").append(node.name);
+                sb.append(" -> [").append(node.name).append("]");
                 node = node.next;
             }
             sb.append('\n');
