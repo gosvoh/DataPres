@@ -95,11 +95,47 @@ public class BitArraySetTest {
         Assert.assertEquals(2, arraySet.size());
     }
 
-    @Test public void Insert() {
+    @Test public void Contains() {
         BitArraySet arraySet = new BitArraySet(-128, 127);
         Assert.assertEquals(8, arraySet.size());
         arraySet.insert(0);
+        arraySet.insert(-5);
+        arraySet.insert(5);
+        Assert.assertTrue(arraySet.contains(-5));
         Assert.assertTrue(arraySet.contains(0));
+        Assert.assertTrue(arraySet.contains(5));
+        Assert.assertFalse(arraySet.contains(1));
+    }
+
+    @Test public void Insert() {
+        BitArraySet arraySet = new BitArraySet(-128, 127);
+        arraySet.insert(0);
+        Assert.assertArrayEquals(new int[]{0, 0, 0, 0, Integer.MIN_VALUE, 0, 0, 0}, arraySet.getArray());
+        arraySet.insert(-5);
+        Assert.assertArrayEquals(new int[]{0, 0, 0, 16, Integer.MIN_VALUE, 0, 0, 0}, arraySet.getArray());
+        arraySet.insert(5);
+        int min = Integer.MIN_VALUE | Integer.MIN_VALUE >>> 5;
+        Assert.assertArrayEquals(new int[]{0, 0, 0, 16, min, 0, 0, 0}, arraySet.getArray());
+    }
+
+    @Test public void Min() {
+        BitArraySet arraySet = new BitArraySet(-128, 127);
+        arraySet.insert(5);
+        Assert.assertEquals(5, arraySet.min());
+        arraySet.insert(0);
+        Assert.assertEquals(0, arraySet.min());
+        arraySet.insert(-5);
+        Assert.assertEquals(-5, arraySet.min());
+    }
+
+    @Test public void Max() {
+        BitArraySet arraySet = new BitArraySet(-128, 127);
+        arraySet.insert(-5);
+        Assert.assertEquals(-5, arraySet.max());
+        arraySet.insert(0);
+        Assert.assertEquals(0, arraySet.max());
+        arraySet.insert(5);
+        Assert.assertEquals(5, arraySet.max());
     }
 
 }
