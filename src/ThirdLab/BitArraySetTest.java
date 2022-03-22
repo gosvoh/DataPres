@@ -120,22 +120,59 @@ public class BitArraySetTest {
 
     @Test public void Min() {
         BitArraySet arraySet = new BitArraySet(-128, 127);
+        arraySet.insert(127);
+        Assert.assertEquals(127, arraySet.min());
+        arraySet.insert(64);
+        Assert.assertEquals(64, arraySet.min());
+        arraySet.insert(32);
+        Assert.assertEquals(32, arraySet.min());
         arraySet.insert(5);
         Assert.assertEquals(5, arraySet.min());
         arraySet.insert(0);
         Assert.assertEquals(0, arraySet.min());
         arraySet.insert(-5);
         Assert.assertEquals(-5, arraySet.min());
+        arraySet.insert(-32);
+        Assert.assertEquals(-32, arraySet.min());
+        arraySet.insert(-64);
+        Assert.assertEquals(-64, arraySet.min());
+        arraySet.insert(-128);
+        Assert.assertEquals(-128, arraySet.min());
+
     }
 
     @Test public void Max() {
         BitArraySet arraySet = new BitArraySet(-128, 127);
+        arraySet.insert(-128);
+        Assert.assertEquals(-128, arraySet.max());
+        arraySet.insert(-64);
+        Assert.assertEquals(-64, arraySet.max());
+        arraySet.insert(-32);
+        Assert.assertEquals(-32, arraySet.max());
         arraySet.insert(-5);
         Assert.assertEquals(-5, arraySet.max());
         arraySet.insert(0);
         Assert.assertEquals(0, arraySet.max());
         arraySet.insert(5);
         Assert.assertEquals(5, arraySet.max());
+        arraySet.insert(32);
+        Assert.assertEquals(32, arraySet.max());
+        arraySet.insert(64);
+        Assert.assertEquals(64, arraySet.max());
+        arraySet.insert(127);
+        Assert.assertEquals(127, arraySet.max());
+    }
+
+    @Test public void Union() {
+        BitArraySet arraySet1 = new BitArraySet(-128, 127);
+        arraySet1.insert(0);
+        arraySet1.insert(5);
+
+        BitArraySet arraySet2 = new BitArraySet(-128, 127);
+        arraySet2.insert(-5);
+        arraySet2.insert(-32);
+
+        arraySet1.union(arraySet2);
     }
 
 }

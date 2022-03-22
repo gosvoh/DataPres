@@ -15,7 +15,11 @@ public interface Set {
 
     int min();
 
+    int getMinRange();
+
     int max();
+
+    int getMaxRange();
 
     boolean equals(Object obj);
 
